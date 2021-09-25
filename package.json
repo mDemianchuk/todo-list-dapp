@@ -1,0 +1,15 @@
+{
+  "name": "todo-list-dapp",
+  "version": "0.1.0",
+  "description": "Blockchain Todo List Powered By Ethereum",
+  "main": "truffle-config.js",
+  "scripts": {
+    "compile": "truffle compile",
+    "deploy": "truffle migrate --reset"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "truffle": "5.4.12",
+    "@truffle/contract": "4.3.36"
+  }
+}
