@@ -14,7 +14,8 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vuetify": "^2.4.0"
+    "vuetify": "^2.4.0",
+    "web3-eth-contract": "^1.5.3"
   },
   "devDependencies": {
     "@truffle/contract": "4.3.36",

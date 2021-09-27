@@ -6,7 +6,7 @@
           v-model="taskContent"
           label="Add task"
           hide-details="auto"
-          @keydown.enter="addTask"
+          @keydown.enter="createTask"
         />
       </v-col>
     </v-row>
@@ -18,7 +18,7 @@
             <v-checkbox
               :input-value="task.isCompleted"
               color="primary"
-              @change="toggle"
+              @change="toggleTaskStatus(index)"
             />
           </v-list-item-action>
           <v-list-item-content>
@@ -32,17 +32,22 @@
 
 <script>
 export default {
+  props: {
+    tasks: {
+      type: Array,
+      required: true,
+    },
+  },
   data: () => ({
-    tasks: [],
     taskContent: "",
   }),
   methods: {
-    toggle() {
-      console.log("here");
+    toggleTaskStatus(taskIndex) {
+      this.$emit("toggleTaskStatus", taskIndex);
     },
-    addTask(event) {
+    createTask(event) {
       event.preventDefault();
-      this.tasks.push({ content: this.taskContent, isCompleted: false });
+      this.$emit("createTask", this.taskContent);
       this.resetTaskContent();
     },
     resetTaskContent() {
