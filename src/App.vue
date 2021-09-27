@@ -35,7 +35,9 @@ export default {
       this.contract = new Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
     },
     async fetchTasks() {
-      this.tasks = await this.contract.methods.getTasks().call();
+      this.tasks = await this.contract.methods
+        .getTasks()
+        .call({ from: this.accounts[0] });
     },
     async createTask(content) {
       this.contract.methods
