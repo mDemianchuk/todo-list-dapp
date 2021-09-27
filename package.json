@@ -5,7 +5,6 @@
   "scripts": {
     "ganache": "ganache-cli",
     "deploy": "truffle migrate --reset",
-    "compile": "truffle compile",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
