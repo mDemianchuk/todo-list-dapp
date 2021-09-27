@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Blockchain Todo List Powered By Ethereum",
   "scripts": {
+    "ganache": "ganache-cli",
     "deploy": "truffle migrate --reset",
     "compile": "truffle compile",
-    "ganache": "ganache-cli",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
