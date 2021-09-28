@@ -65,7 +65,8 @@ export default {
         .send()
         .catch((e) => {
           this.showAlert(e.message, true);
-        });
+        })
+        .finally(this.fetchTasks);
     },
     async toggleTaskStatus(index) {
       return this.contract.methods
@@ -73,7 +74,8 @@ export default {
         .send()
         .catch((e) => {
           this.showAlert(e.message, true);
-        });
+        })
+        .finally(this.fetchTasks);
     },
     showAlert(errorMessage, isAlertDismisable = false) {
       this.errorMessage = errorMessage;
