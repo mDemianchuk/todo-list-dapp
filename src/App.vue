@@ -1,5 +1,6 @@
 <script>
 import Contract from "web3-eth-contract";
+
 import TodoList from "./components/TodoList";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./utils/contract-details";
 
@@ -9,14 +10,14 @@ export default {
   },
   data: () => ({
     ethProvider: window.ethereum,
-    accounts: [],
+    account: "",
     contract: null,
     tasks: [],
     isLoaded: false,
   }),
   async mounted() {
     if (this.ethProvider) {
-      await this.setAccounts();
+      await this.setAccount();
       this.setContract();
       await this.fetchTasks();
       this.isLoaded = true;
@@ -25,24 +26,25 @@ export default {
     }
   },
   methods: {
-    async setAccounts() {
-      this.accounts = await this.ethProvider.request({
+    async setAccount() {
+      const accounts = await this.ethProvider.request({
         method: "eth_requestAccounts",
       });
+      this.account = accounts[0];
     },
     setContract() {
       Contract.setProvider(this.ethProvider);
-      this.contract = new Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+      this.contract = new Contract(CONTRACT_ABI, CONTRACT_ADDRESS, {
+        from: this.account,
+      });
     },
     async fetchTasks() {
-      this.tasks = await this.contract.methods
-        .getTasks()
-        .call({ from: this.accounts[0] });
+      this.tasks = await this.contract.methods.getTasks().call();
     },
     async createTask(content) {
       this.contract.methods
         .createTask(content)
-        .send({ from: this.accounts[0] })
+        .send()
         .once("receipt", (receipt) => {
           console.log(receipt);
         });
@@ -50,7 +52,7 @@ export default {
     async toggleTaskStatus(index) {
       this.contract.methods
         .toggleTaskStatus(index)
-        .send({ from: this.accounts[0] })
+        .send()
         .once("receipt", (receipt) => {
           console.log(receipt);
         });
@@ -62,9 +64,9 @@ export default {
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <span>Todo List DApp</span>
+      <v-app-bar-title>Todo List DApp</v-app-bar-title>
       <v-spacer />
-      <span v-if="accounts.length">Account: {{ accounts[0] }}</span>
+      <span v-if="account">Account: {{ account }}</span>
     </v-app-bar>
     <v-main>
       <v-progress-linear v-if="!isLoaded" absolute indeterminate />
