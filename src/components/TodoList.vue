@@ -1,3 +1,36 @@
+<script>
+export default {
+  props: {
+    tasks: {
+      type: Array,
+      required: true,
+    },
+  },
+  data: () => ({
+    test: undefined,
+    taskContent: "",
+  }),
+  watch: {
+    test(v) {
+      console.log(v);
+    },
+  },
+  methods: {
+    toggleTaskStatus(taskIndex) {
+      this.$emit("toggleTaskStatus", taskIndex);
+    },
+    createTask(event) {
+      event.preventDefault();
+      this.$emit("createTask", this.taskContent);
+      this.resetTaskContent();
+    },
+    resetTaskContent() {
+      this.taskContent = "";
+    },
+  },
+};
+</script>
+
 <template>
   <v-container>
     <v-row class="text-center">
@@ -30,29 +63,3 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  props: {
-    tasks: {
-      type: Array,
-      required: true,
-    },
-  },
-  data: () => ({
-    taskContent: "",
-  }),
-  methods: {
-    toggleTaskStatus(taskIndex) {
-      this.$emit("toggleTaskStatus", taskIndex);
-    },
-    createTask(event) {
-      event.preventDefault();
-      this.$emit("createTask", this.taskContent);
-      this.resetTaskContent();
-    },
-    resetTaskContent() {
-      this.taskContent = "";
-    },
-  },
-};
-</script>

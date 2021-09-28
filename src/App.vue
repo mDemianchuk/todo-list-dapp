@@ -14,23 +14,36 @@ export default {
     contract: null,
     tasks: [],
     isLoaded: false,
+    isAlertVisible: false,
+    isAlertDismisable: false,
+    errorMessage: "",
   }),
   async mounted() {
     if (this.ethProvider) {
-      await this.setAccount();
-      this.setContract();
-      await this.fetchTasks();
-      this.isLoaded = true;
+      try {
+        await this.setAccount();
+        this.setContract();
+        await this.fetchTasks();
+      } catch (e) {
+        this.showAlert(e);
+      }
     } else {
-      console.log("Please install MetaMask.");
+      this.showAlert("Please install MetaMask.");
     }
+    this.isLoaded = true;
   },
   methods: {
     async setAccount() {
-      const accounts = await this.ethProvider.request({
-        method: "eth_requestAccounts",
-      });
-      this.account = accounts[0];
+      return this.ethProvider
+        .request({
+          method: "eth_requestAccounts",
+        })
+        .then((accounts) => {
+          this.account = accounts[0];
+        })
+        .catch(() => {
+          throw "Unable to load accounts.";
+        });
     },
     setContract() {
       Contract.setProvider(this.ethProvider);
@@ -39,23 +52,33 @@ export default {
       });
     },
     async fetchTasks() {
-      this.tasks = await this.contract.methods.getTasks().call();
+      return this.contract.methods
+        .getTasks()
+        .call()
+        .then((tasks) => {
+          this.tasks = tasks;
+        });
     },
     async createTask(content) {
-      this.contract.methods
+      return this.contract.methods
         .createTask(content)
         .send()
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .catch((e) => {
+          this.showAlert(e.message, true);
         });
     },
     async toggleTaskStatus(index) {
-      this.contract.methods
+      return this.contract.methods
         .toggleTaskStatus(index)
         .send()
-        .once("receipt", (receipt) => {
-          console.log(receipt);
+        .catch((e) => {
+          this.showAlert(e.message, true);
         });
+    },
+    showAlert(errorMessage, isAlertDismisable = false) {
+      this.errorMessage = errorMessage;
+      this.isAlertDismisable = isAlertDismisable;
+      this.isAlertVisible = true;
     },
   },
 };
@@ -76,6 +99,17 @@ export default {
         @createTask="createTask"
         @toggleTaskStatus="toggleTaskStatus"
       />
+      <v-dialog v-model="isAlertVisible" width="600px" persistent>
+        <v-alert
+          v-model="isAlertVisible"
+          :dismissible="isAlertDismisable"
+          class="mb-0"
+          type="error"
+          border="left"
+        >
+          {{ errorMessage }}
+        </v-alert>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
