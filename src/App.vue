@@ -1,6 +1,5 @@
 <script>
 import Contract from "web3-eth-contract";
-
 import TodoList from "./components/TodoList";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./utils/contract-details";
 

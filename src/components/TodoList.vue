@@ -7,14 +7,8 @@ export default {
     },
   },
   data: () => ({
-    test: undefined,
     taskContent: "",
   }),
-  watch: {
-    test(v) {
-      console.log(v);
-    },
-  },
   methods: {
     toggleTaskStatus(taskIndex) {
       this.$emit("toggleTaskStatus", taskIndex);
