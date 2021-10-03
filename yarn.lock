@@ -2433,7 +2433,7 @@
     debug "^4.3.1"
     glob "^7.1.6"
 
-"@truffle/contract@4.3.36", "@truffle/contract@^4.3.36":
+"@truffle/contract@^4.3.36":
   version "4.3.36"
   resolved "https://registry.yarnpkg.com/@truffle/contract/-/contract-4.3.36.tgz#c48ac658ba07afa2a8f89577f97855e8469613df"
   integrity sha512-GguvXERc2Ey5rFNFo4lcpKSnnt/qH5wymJd7SPspTf2M8FuTY5ytid6BDrGmAZ18/l3HQIKMN17/++lKTtb7Ow==

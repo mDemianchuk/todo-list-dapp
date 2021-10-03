@@ -17,7 +17,6 @@
     "web3-eth-contract": "^1.5.3"
   },
   "devDependencies": {
-    "@truffle/contract": "4.3.36",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
