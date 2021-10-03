@@ -5,6 +5,7 @@
   "scripts": {
     "ganache": "ganache-cli",
     "deploy": "truffle migrate --reset",
+    "test": "truffle test",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -14,14 +15,19 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vuetify": "^2.4.0",
+    "web3": "^1.6.0",
     "web3-eth-contract": "^1.5.3"
   },
   "devDependencies": {
+    "@truffle/contract": "4.3.36",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "chai": "4.3.4",
+    "chai-as-promised": "7.1.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-truffle": "^0.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "ganache-cli": "^6.12.2",
     "sass": "~1.32.0",
@@ -30,20 +36,6 @@
     "vue-cli-plugin-vuetify": "~2.4.2",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
   },
   "browserslist": [
     "> 1%",
